@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record model ="ir.ui.view" id ="restaurant_app.lineProduct_model_form">
+            <field name ="name">LineProduct Form</field>
+            <field name="model">restaurant_app.lineproduct_model</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h2 style="color:#117DA0">Date Line Product</h2>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+    
+        </record>
+        <record model="ir.ui.view" id="restaurant_app.lineProduct_list_tree">
+            <field name ="name">LineProduct Tree</field>
+            <field name="model">restaurant_app.lineproduct_model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                </tree>
+    
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="restaurant_app.action_window_lineProduct">
+            <field name ="name">LineProduct App</field>
+            <field name="res_model">restaurant_app.lineproduct_model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

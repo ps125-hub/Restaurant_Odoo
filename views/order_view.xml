@@ -1,0 +1,104 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="restaurant_app.order_model_form">
+            <field name="name">Order Form</field>
+            <field name="model">restaurant_app.order_model</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" states="D" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <h2 style="color:#117DA0">Date Order</h2>
+                        <group>
+                            <field name="table" />
+                            <field name="client" />
+                            <field name="pax" />
+                            <field name="waiter" />
+                            <field name="lineProducts" />
+                            <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
+                            <field name="active" readonly="True" force_save="True" invisible="True" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+
+        </record>
+        <record model="ir.ui.view" id="restaurant_app.order_list_tree">
+            <field name="name">Order Tree</field>
+            <field name="model">restaurant_app.order_model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="table" />
+                    <field name="client" />
+                    <field name="pax" />
+                    <field name="waiter" />
+                    <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
+                    <field name="active" invisible="True" />
+                </tree>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="restaurant_app.action_window_order_model_kanban">
+
+            <field name="name">Kanban List</field>
+
+            <field name="model">restaurant_app.order_model</field>
+
+            <field name="arch" type="xml">
+
+                <kanban class="o_res_partner_kanban">
+
+                    <field name="table"/>
+
+                    <field name="client"/>
+                    <field name="pax"/>
+                    <field name="waiter"/>
+                    <field name="priceTotal"/>
+                    <field name="state"/>
+                    <templates>
+
+                        <t t-name="kanban-box">
+
+                            <div t-attf-class="oe_kanban_global_click">
+
+                                <div class="oe_kanban_details">
+
+                                    <strong>
+
+                                        <field name="table" class="oe_inline" />, <field name="client" class="oe_inline"/>
+
+                                    </strong>
+                                    <div t-if="record.pax.value">
+                                        <t t-esc="record.pax.value" />
+                                    </div>
+                                    <div t-if="record.waiter.value">
+                                        <t t-esc="record.waiter.value" />
+                                    </div>
+                                    <div t-if="record.priceTotal.value">
+                                        <t t-esc="record.priceTotal.value" />
+                                    </div>
+                                    <div t-if="record.state.value">
+                                        <t t-esc="record.state.value" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </templates>
+
+                </kanban>
+
+            </field>
+
+        </record>
+        <record model="ir.actions.act_window" id="restaurant_app.action_window_order">
+            <field name="name">Order App</field>
+            <field name="res_model">restaurant_app.order_model</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<odoo>
+<data>
+<!-- Top menu item-->
+    <menuitem name="Restaurant App" id ="restaurant_app.menu_root"/>
+    <!-- menu categories-->
+    <menuitem name ="Categories" id="restaurant_app.menu_categories" parent="restaurant_app.menu_root"/> 
+    <menuitem name ="Products" id="restaurant_app.menu_products" parent="restaurant_app.menu_root"/> 
+    <menuitem name="Ingredients" id="restaurant_app.menu_ingredients" parent="restaurant_app.menu_root"/> 
+    <menuitem name="Orders" id="restaurant_app.order_model" parent="restaurant_app.menu_root"/> 
+    <menuitem name="LineProducts" id="restaurant_app.lineproduct_model" parent="restaurant_app.menu_root" />
+
+    <!-- actions-->
+    <menuitem name="categorie List" id ="restaurant_app.menu_category_list" parent="restaurant_app.menu_categories"
+        action="restaurant_app.action_window_category"/>
+    <menuitem name="Product List" id ="restaurant_app.menu_product_list" parent="restaurant_app.menu_products"
+        action="restaurant_app.action_window_product"/>
+    <menuitem name="Ingredient List" id ="restaurant_app.menu_ingredient_list" parent="restaurant_app.menu_ingredients"
+        action="restaurant_app.action_window_ingredient"/>
+    <menuitem name="Order List" id ="restaurant_app.menu_order_list" parent="restaurant_app.order_model"
+        action="restaurant_app.action_window_order"/>
+    <menuitem name="Line Product List" id ="restaurant_app.menu_lineProduct_list"  parent="restaurant_app.lineproduct_model"  action="restaurant_app.action_window_lineProduct" />
+</data>
+
+</odoo>

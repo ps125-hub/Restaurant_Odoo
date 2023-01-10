@@ -1,0 +1,92 @@
+<odoo>
+<data>
+    <record model ="ir.ui.view" id ="restaurant_app.ingredient_model_form">
+        <field name ="name">Ingredient Form</field>
+        <field name="model">restaurant_app.ingredient_model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h2 style="{color:#117DA0}">Date ingredient</h2>
+                    <group >
+                        <field name="name"/>
+                        <field name="allergen"/>
+                        <field name="comentari"/>
+                        <field name="products">
+                            <tree>
+                                <field name="name"/>
+                                <field name="description"/>
+                                <field name="price"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+    <record model="ir.ui.view" id="restaurant_app.ingredient_list_tree">
+        <field name ="name">Ingredient Tree</field>
+        <field name="model">restaurant_app.ingredient_model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="allergen"/>
+                <field name="comentari"/>
+                <field name="products" widget="many2many_tags"/>
+            </tree>
+
+        </field>
+    </record>
+    <record model="ir.ui.view" id="restaurant_app.action_window_ingredient_model_kanban">
+        <field name="name">Kanban List</field>
+
+        <field name="model">restaurant_app.ingredient_model</field>
+
+        <field name="arch" type="xml">
+
+            <kanban class="o_res_partner_kanban">
+
+                <field name="name"/>
+                <field name="allergen"/>
+                <field name="comentari"/>
+                <templates>
+
+                    <t t-name="kanban-box">
+
+                        <div t-attf-class="oe_kanban_global_click">
+
+                            <div class="oe_kanban_details">
+
+                                <strong>
+                                    <field name="name" class="oe_inline" />
+                                </strong>
+                                <div t-if="record.allergen.value">
+                                    <t t-esc="record.allergen.value" />
+                                </div>
+                                <div t-if="record.comentari.value">
+                                    <t t-esc="record.comentari.value" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </t>
+
+                </templates>
+
+            </kanban>
+
+        </field>
+
+    </record>
+    <record model="ir.actions.act_window" id="restaurant_app.action_window_ingredient">
+        <field name ="name">Ingredient App</field>
+        <field name="res_model">restaurant_app.ingredient_model</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+</data>
+
+</odoo>
