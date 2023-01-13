@@ -18,8 +18,14 @@
                         <field name="base" widget="monetary" options="{'currency_field':'currency_id'}"/>
                         <field name="vat" widget="selection" attrs = "{'readonly':[('state','=','C')]}" />
                         <field name="total" widget="monetary" options="{'currency_field':'currency_id'}"/>
-                        <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}" />
-                        <!--<field name = "orders" attrs ="{'readonly':[('state','=','C')]}"/>-->
+                        <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}">
+                            <tree>
+                                <field name = "product_id"/>
+                                <field name = "quantity"/>
+                                <field name = "price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                            </tree>
+                        </field>
+                        
                     </group>
                 </sheet>
             </form>
