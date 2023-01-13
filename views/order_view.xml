@@ -12,13 +12,13 @@
                     <sheet>
                         <h2 style="color:#117DA0">Date Order</h2>
                         <group>
-                            <field name="table" />
-                            <field name="client" />
-                            <field name="pax" />
-                            <field name="waiter" />
-                            <field name="lineProducts" />
+                            <field name="table" attrs = "{'readonly':[('state','=','C')]}" />
+                            <field name="client" attrs = "{'readonly':[('state','=','C')]}" />
+                            <field name="pax" attrs = "{'readonly':[('state','=','C')]}" />
+                            <field name="waiter" attrs = "{'readonly':[('state','=','C')]}" />
+                            <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}" />
                             <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
-                            <field name="active" readonly="True" force_save="True" invisible="True" />
+                            <field name="active" readonly="True" force_save="True" invisible="True" attrs = "{'readonly':[('state','=','C')]}" />
                         </group>
                     </sheet>
                 </form>

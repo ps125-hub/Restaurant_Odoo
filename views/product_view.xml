@@ -14,7 +14,13 @@
                             <field name="description" />
                             <field name="currency_id" invisible="True" />
                             <field name="price" widget="monetary" options="{'currency_field':'currency_id'}" />
-                            <field name="category_id" />
+                            <field name="categories">
+                                <tree>
+                                    <field name = "complete_name"/>
+                                    <field name ="description"/>
+                                </tree>
+                            </field>
+
                             <field name="ingredients">
                                 <tree>
                                     <field name="name" />
@@ -41,7 +47,7 @@
                     <field name="description" />
                     <field name="price" widget="monetary" options="{'currency_field':'currency_id'}" />
                     <field name="currency_id" invisible="True" />
-                    <field name="category_id" />
+                    <field name="categories" widget="many2many_tags"/>
                     <field name="ingredients" widget="many2many_tags" />
                 </tree>
 

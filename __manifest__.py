@@ -30,6 +30,7 @@
         'views/ingredients_view.xml',
         "views/order_view.xml",
         "views/lineProduct_view.xml",
+        "views/invoice_view.xml",
         'views/menu.xml',
         #'views/views.xml',
 

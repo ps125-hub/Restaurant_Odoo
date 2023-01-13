@@ -1,4 +1,99 @@
 <odoo>
+<data>
+    <record model="ir.ui.view" id="restaurant_app.invoice_model_form">
+        <field name="name">Invoice Form</field>
+        <field name="model">restaurant_app.invoice_model</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" states="D" />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <h2 style="color:#117DA0">Date Invoice</h2>
+                    <group>
+                        <field name="ref" />
+                        <field name="client" attrs = "{'readonly':[('state','=','C')]}" />
+                        <field name="date" attrs = "{'readonly':[('state','=','C')]}" />
+                        <field name="base" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                        <field name="vat" widget="selection" attrs = "{'readonly':[('state','=','C')]}" />
+                        <field name="total" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                        <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}" />
+                        <!--<field name = "orders" attrs ="{'readonly':[('state','=','C')]}"/>-->
+                    </group>
+                </sheet>
+            </form>
+        </field>
 
+    </record>
+    <record model="ir.ui.view" id="restaurant_app.invoice_list_tree">
+        <field name="name">Invoice Tree</field>
+        <field name="model">restaurant_app.invoice_model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ref" />
+                <field name="client" />
+                <field name="total" widget="monetary" options="{'currency_field':'currency_id'}" />
+                <field name="date" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="restaurant_app.action_window_invoice_model_kanban">
+
+        <field name="name">Invoice List</field>
+
+        <field name="model">restaurant_app.invoice_model</field>
+
+        <field name="arch" type="xml">
+
+            <kanban class="o_res_partner_kanban">
+
+                <field name="ref" />
+                <field name="client" />
+                <field name="total" widget="monetary" options="{'currency_field':'currency_id'}" />
+                <field name="date" />
+                <field name="state"/>
+                <templates>
+
+                    <t t-name="kanban-box">
+
+                        <div t-attf-class="oe_kanban_global_click">
+
+                            <div class="oe_kanban_details">
+
+                                <strong>
+
+                                    <field name="ref" class="oe_inline" />, <field name="client" class="oe_inline"/>
+
+                                </strong>
+                                <div t-if="record.total.value">
+                                    <t t-esc="record.total.value" />
+                                </div>
+                                <div t-if="record.date.value">
+                                    <t t-esc="record.date.value" />
+                                </div>
+                                <div t-if="record.state.value">
+                                    <t t-esc="record.state.value" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </t>
+
+                </templates>
+
+            </kanban>
+
+        </field>
+
+    </record>
+    <record model="ir.actions.act_window" id="restaurant_app.action_window_invoice">
+        <field name="name">Invoice App</field>
+        <field name="res_model">restaurant_app.invoice_model</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+</data>
     
 </odoo>

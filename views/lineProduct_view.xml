@@ -10,6 +10,7 @@
                         <group>
                             <field name="product_id"/>
                             <field name="quantity"/>
+                            <field name ="price"/>
                         </group>
                     </sheet>
                 </form>

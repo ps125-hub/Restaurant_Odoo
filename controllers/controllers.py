@@ -24,7 +24,7 @@ class RestaurantApp(http.Controller):
             domain=[("id","=",idproduct)]
         else:
             domain=[]
-        productdata = http.request.env["restaurant_app.product_model"].sudo().search_read(domain,["name","description","currency_id","price","category_id","ingredients"])
+        productdata = http.request.env["restaurant_app.product_model"].sudo().search_read(domain,["name","description","currency_id","price","categories","ingredients"])
         data={  
             #"status":200,
             "data":productdata 

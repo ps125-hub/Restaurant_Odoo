@@ -40,8 +40,9 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="complete_name"/>
                     <field name ="description"/>
-
+                    <field name="products" widget="many2many_tags"/>
                 </tree>
     
             </field>
@@ -66,8 +67,7 @@
                                 <div class="oe_kanban_details">
 
                                     <strong>
-
-                                        <field name="name" class="oe_inline" />
+                                        <field name="complete_name" class="oe_inline" />
 
                                     </strong>
                                     <div t-if="record.description.value">

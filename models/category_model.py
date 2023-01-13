@@ -9,13 +9,13 @@ class CategoryModel(models.Model):
     name=fields.Char(string="Category",help="Name of the category",required=True,index=True)
     complete_name = fields.Char('Complete Name', compute='_compute_complete_name',recursive = True,store = True)
     description = fields.Text(string="Description",help="Description of the category",required=True)
-    products=fields.One2many("restaurant_app.product_model","category_id",string="Products")
+    products=fields.Many2many("restaurant_app.product_model",relation ='category2product',string="Products")
     totalProduts = fields.Integer("Total Products",compute="_total",store=True)
     parent_id = fields.Many2one("restaurant_app.category_model",string = "Parent Category",index=True, ondelete ='cascade')
     child_ids = fields.One2many("restaurant_app.category_model","parent_id",string = "Childs category")
-    @api.depends("products.category_id")
-    def _total(self):
-        self.totalProduts= len(self.products)
+    #@api.depends("products.category_id")
+    #def _total(self):
+    #    self.totalProduts= len(self.products)
     @api.depends('name','parent_id.complete_name')
     def _compute_complete_name(self):
         for category in self:

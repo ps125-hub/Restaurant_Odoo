@@ -6,5 +6,10 @@ class LineProductModel(models.Model):
     invoice_id = fields.Many2one('restaurant_app.invoice_model', string ='Invoice')
     order_id = fields.Many2one('restaurant_app.order_model',string="Order")
     product_id = fields.Many2one('restaurant_app.product_model',string="Product")
-    quantity = fields.Integer(string="Quantity",help="Quantity of the product",required=True)
-    price  = fields.Float(string="Price",help="Price of the line product",default="0")
+    quantity = fields.Integer(string="Quantity",help="Quantity of the product",required=True, default=1)
+    price  = fields.Float(string="Price",help="Price of the line product",compute = '_calcPrice',readonly=1,recursive = True,store = True,default="0")
+    @api.depends('product_id.price','quantity')
+    def _calcPrice(self):
+        self.price = self.product_id.price*self.quantity
+        
+        
