@@ -3,7 +3,7 @@ from odoo import api,models,fields
 class ProductModel(models.Model):
     _name='restaurant_app.product_model'
     _description = 'This is the product model'
-
+    
     name = fields.Char(string = "Product name",help="Name of the product",required=True,index=True)
     description = fields.Text(string="Description",help="Description of the product")
     currency_id = fields.Many2one('res.currency',string="Currency",default=lambda self:self.env.user.company_id.currency_id)

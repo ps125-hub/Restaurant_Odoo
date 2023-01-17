@@ -3,13 +3,15 @@ class LineProductModel(models.Model):
     _name='restaurant_app.lineproduct_model'
     _description='This is the line product model'
     
-    invoice_id = fields.Many2one('restaurant_app.invoice_model', string ='Invoice')
-    order_id = fields.Many2one('restaurant_app.order_model',string="Order")
-    product_id = fields.Many2one('restaurant_app.product_model',string="Product")
+    invoice_id = fields.Many2one('restaurant_app.invoice_model', string ='Invoice',ondelete = "cascade")
+    order_id = fields.Many2one('restaurant_app.order_model',string="Order",ondelete = "cascade")
+    product_id = fields.Many2one('restaurant_app.product_model',string="Product",ondelete = "cascade")
     quantity = fields.Integer(string="Quantity",help="Quantity of the product",required=True, default=1)
-    price  = fields.Float(string="Price",help="Price of the line product",compute = '_calcPrice',readonly=1,store = True,default="0")
+    currency_id = fields.Many2one('res.currency',string="Currency",default=lambda self:self.env.user.company_id.currency_id)
+    price  = fields.Monetary(string="Price",help="Price of the line product",compute = '_calcPrice',readonly=1,store = True)
     @api.depends('product_id.price','quantity')
     def _calcPrice(self):
-        self.price = self.product_id.price*self.quantity
+        for rec in self:
+            self.price = rec.product_id.price*rec.quantity
         
         

@@ -18,15 +18,16 @@ class IngredientModel(models.Model):
     state = fields.Selection(string="Status",selection=[('D','Draft'),('C','Confirmed'),],default="D")
     active = fields.Boolean(string = "Is the order active?",help="The task is order??",default=True)
     
-    @api.depends('table')
+    @api.onchange('table')
     def _createClient(self):
-        self.client = "table_"+str(self.table)
+        for rec in self:
+            self.client = "table_"+str(rec.table)
 
-    @api.depends("lineProducts.quantity","lineProducts.product_id.price")
+    @api.depends("lineProducts.quantity","lineProducts.price")
     def _totalPrice(self):
         self.priceTotal=0
         for rec in self.lineProducts:
-            self.priceTotal+=(rec.quantity*rec.product_id.price)
+            self.priceTotal+=rec.price
 
     def confirmInvoice(self):
         self.ensure_one()

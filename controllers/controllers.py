@@ -42,7 +42,18 @@ class RestaurantApp(http.Controller):
             "data":categoriadata 
             }
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
-    
+    @http.route(['/restaurant_app/getInvoice','/restaurant_app/getInvoice/<int:idinvoice>'],auth='public', type='http')
+    def getCategory(self,idinvoice=None, **kw):
+        if idinvoice:
+            domain=[("id","=",idinvoice)]
+        else:
+            domain=[]
+        invoicedata = http.request.env["restaurant_app.invoice_model"].sudo().search_read(domain,["ref","client","base","vat","total","lineProducts","orders","state"])
+        data={  
+            #"status":200,
+            "data":invoicedata 
+            }
+        return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
     @http.route('/restaurant_app/addIngredient',auth='public', type='json',method="POST")
     def addIngredient(self, **kw):

@@ -10,7 +10,7 @@
                         <group>
                             <field name="product_id"/>
                             <field name="quantity"/>
-                            <field name ="price"/>
+                            <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                         </group>
                     </sheet>
                 </form>
@@ -24,6 +24,7 @@
                 <tree>
                     <field name="product_id"/>
                     <field name="quantity"/>
+                    <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                 </tree>
     
             </field>
