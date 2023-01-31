@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_detail">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                <style>
+                    * {
+                        box-sizing: border-box;
+                      }
+                    .page{
+                        border:2px solid black;
+                        width:100%; 
+                    }
+                    .column {
+                        margin: 10px;
+                        padding: 10px;
+                    }
+                    .row {
+                        display: flex;
+                        width:80%; 
+                      }
+                    table{
+                        width:80%; 
+                        border: 5px solid red;
+                        border-spacing: 20px;
+                        text-align:center;
+                    }
+                </style>
+                <div class="page">
+                <h2>Invoice <t t-esc="doc.date"/></h2>
+                <div class="row">
+                    <div class ="column">
+                        <p>Ref: <t t-esc="doc.ref" /></p>
+                        <p>Client: <t t-esc="doc.client" /></p>
+                        <p>Base: <t t-esc="doc.base" /></p>
+                        <p>Vat: <t t-esc="doc.vat" /></p>
+                        <p>Total : <t t-esc="doc.total" />€</p>
+                    </div>
+                    <div class ="column">
+                        <h4>Lines:</h4>
+                        <table>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                            <t t-foreach="doc.lineProducts" t-as="lineProduct">
+                                <tr>
+                                    <td><t t-esc="lineProduct.product_id.name"/></td>
+                                    <td><t t-esc="lineProduct.product_id.price" /></td>
+                                    <td><t t-esc="lineProduct.quantity"/></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

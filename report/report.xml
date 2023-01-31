@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+       <!-- <report_invoice_template<record id = "report_invoice_pdf" model ="ir.actions.report">
+            <field name = "name">Invoice pdf</field>
+            <field name = "model">restaurant_app.invoice_model</field>
+            <field name = "report_type">qweb-pdf</field>
+            <field name ="report_name">restaurant_app.report_invoice_detail</field>
+            <field name = "report_file">restaurant_app.report_invoice_detail</field>
+
+        </record>-->
+        <report 
+        id="report_invoice_pdf"
+        string="Invoice pdf"
+        model="restaurant_app.invoice_model"
+        report_type="qweb-pdf"
+        name="restaurant_app.report_invoice_detail"
+        file="restaurant_app.report_invoice_detail"/>
+    </data>
+</odoo>

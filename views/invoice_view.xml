@@ -1,5 +1,6 @@
 <odoo>
 <data>
+
     <record model="ir.ui.view" id="restaurant_app.invoice_model_form">
         <field name="name">Invoice Form</field>
         <field name="model">restaurant_app.invoice_model</field>
@@ -44,6 +45,7 @@
             </tree>
         </field>
     </record>
+
     <record model="ir.ui.view" id="restaurant_app.action_window_invoice_model_kanban">
 
         <field name="name">Invoice List</field>
