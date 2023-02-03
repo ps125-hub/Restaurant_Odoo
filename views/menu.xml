@@ -1,18 +1,18 @@
 <odoo>
 <data>
 <!-- Top menu item-->
-    <menuitem name="Restaurant App" id ="restaurant_app.menu_root"/>
+    <menuitem name="Restaurant App" id ="restaurant_app.menu_root" web_icon="restaurant_app,static/description/icon.png" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/>
     <!-- menu categories-->
-    <menuitem name ="Categories" id="restaurant_app.menu_categories" parent="restaurant_app.menu_root"/> 
-    <menuitem name ="Products" id="restaurant_app.menu_products" parent="restaurant_app.menu_root"/> 
-    <menuitem name="Ingredients" id="restaurant_app.menu_ingredients" parent="restaurant_app.menu_root"/> 
-    <menuitem name="Orders" id="restaurant_app.order_model" parent="restaurant_app.menu_root"/> 
-    <menuitem name="LineProducts" id="restaurant_app.lineproduct_model" parent="restaurant_app.menu_root" />
-    <menuitem name="Invoices" id="restaurant_app.invoice_model" parent="restaurant_app.menu_root" />
+    <menuitem name ="Categories" id="restaurant_app.menu_categories" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker" /> 
+    <menuitem name ="Products" id="restaurant_app.menu_products" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/> 
+    <menuitem name="Ingredients" id="restaurant_app.menu_ingredients" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/> 
+    <menuitem name="Orders" id="restaurant_app.order_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/> 
+    <menuitem name="LineProducts" id="restaurant_app.lineproduct_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/>
+    <menuitem name="Invoices" id="restaurant_app.invoice_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter"/>
 
     <!-- actions-->
     <menuitem name="categorie List" id ="restaurant_app.menu_category_list" parent="restaurant_app.menu_categories"
-        action="restaurant_app.action_window_category"/>
+        action="restaurant_app.action_window_category" />
     <menuitem name="Product List" id ="restaurant_app.menu_product_list" parent="restaurant_app.menu_products"
         action="restaurant_app.action_window_product"/>
     <menuitem name="Ingredient List" id ="restaurant_app.menu_ingredient_list" parent="restaurant_app.menu_ingredients"

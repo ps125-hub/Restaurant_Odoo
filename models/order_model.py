@@ -1,12 +1,12 @@
 from odoo import models,fields,api
 from odoo.exceptions import ValidationError
 
-class IngredientModel(models.Model):
+class OrderModel(models.Model):
     _name='restaurant_app.order_model'
     _description='This is the order model'
     _rec_name ='table'
 
-    table = fields.Integer(string="Table",required=True)
+    table = fields.Integer(string="Table",required=True,index = True)
     client = fields.Char(string ="Client",help="Name of the client",required = True, compute = "_createClient",store=True)
     pax = fields.Integer(string="Pax",help="Number of the person",required=True,default=1)
     waiter = fields.Char(string="Waiter",help="Name of the waiter",required=True, default = lambda self:self.env.user.name)
@@ -17,7 +17,15 @@ class IngredientModel(models.Model):
     invoice_id = fields.Many2one("restaurant_app.invoice_model",string = "Invoice", compute="_createInvoice",store=True)
     state = fields.Selection(string="Status",selection=[('D','Draft'),('C','Confirmed'),],default="D")
     active = fields.Boolean(string = "Is the order active?",help="The task is order??",default=True)
-    
+    @api.constrains("table")
+    def _numTable(self):
+        num=0
+        records = self.env["restaurant_app.order_model"].search([])
+        for rec in records:
+            if rec.table == self.table:
+                num+=1
+                if num ==2:
+                    raise ValidationError("There cannot be two order with the same table!!")
     @api.onchange('table')
     def _createClient(self):
         for rec in self:
@@ -40,3 +48,4 @@ class IngredientModel(models.Model):
         if(self.state =='C'):
             invoice = self.env["restaurant_app.invoice_model"].sudo().create({"client": self.client,"lineProducts": self.lineProducts})
             self.invoice_id = invoice
+            

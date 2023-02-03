@@ -1,0 +1,22 @@
+<odoo>
+
+    <record id="module_rest_category" model="ir.module.category">
+        <field name="name">Restaurant</field>
+    </record>
+    <record id="restaurant_group_adm" model="res.groups">
+        <field name="name">Administrador</field>
+        <field name="category_id" ref="module_rest_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="restaurant_group_waiter" model="res.groups">
+        <field name="name">Waiter</field>
+        <field name="category_id" ref="module_rest_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="restaurant_group_cooker" model="res.groups">
+        <field name="name">Cooker</field>
+        <field name="category_id" ref="module_rest_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    
+</odoo>

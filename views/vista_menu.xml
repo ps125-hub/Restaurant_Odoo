@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <!-- Top menu item -->
+    <menuitem name="Restaurant" id="restaurant.menu_root" web_icon="restaurant_app,static/description/icon.png"/>
+    
+    <!-- menu categories -->
+    
+    <menuitem name="Administrator" id="Restaurant.administrator" parent="restaurant.menu_root"/>
+    <menuitem name="Waiter" id="Restaurant.waiter" parent="restaurant.menu_root"/>
+    <menuitem name="Cooker" id="Restaurant.cooker" parent="restaurant.menu_root"/>
+    <!-- actions -->
+    <menuitem name="Historial" id="clinica.historial_list" parent="clinica.pacientes_menuitem" action="clinica.historial_action_window" groups="clinica.clinica_group_facult"/>
+     
+  </data>
+</odoo>

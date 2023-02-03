@@ -24,6 +24,7 @@
 
     # always loaded
     'data': [
+        'security/restaurant_security.xml',
         'security/ir.model.access.csv',
         'views/category_view.xml',
         'views/product_view.xml',
