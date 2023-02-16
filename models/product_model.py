@@ -13,6 +13,7 @@ class ProductModel(models.Model):
     image = fields.Binary(help="image of the student")
     lineProducts = fields.One2many("restaurant_app.lineproduct_model","product_id",string="Line products")
     totalIng = fields.Integer("Total Ingredients",compute="_total",store=True)
+    manager= fields.Selection(string ='Manager', help = 'Manager of a product',selection =[('B','Barman'),('C','Cooker')],required  = True)
     @api.depends("ingredients")
     def _total(self):
         self.totalIng= len(self.ingredients)

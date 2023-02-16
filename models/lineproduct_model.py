@@ -10,14 +10,14 @@ class LineProductModel(models.Model):
     currency_id = fields.Many2one('res.currency',string="Currency",default=lambda self:self.env.user.company_id.currency_id)
     price  = fields.Monetary(string="Price",help="Price of the line product",compute = '_calcPrice',readonly=1,store = True)
     state = fields.Selection(string="Status",selection=[('P','Prepare'),('D','Done'),],default="P")
-    
+    isdone = fields.Boolean(string = "Is done", help="The line order is done?",default = False)
     @api.depends('product_id.price','quantity')
     def _calcPrice(self):
         for rec in self:
             self.price = rec.product_id.price*rec.quantity
-    @api.depends('orders.state')
+
     def confirmInvoice(self):
         self.ensure_one()
         if self.state == "P":
             self.state = "D"
-        
+            self.isdone = True

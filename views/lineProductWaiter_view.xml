@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+        <record model ="ir.ui.view" id ="restaurant_app.lineProduct_model_form_waiter">
+            <field name ="name">LineProduct Form</field>
+            <field name="model">restaurant_app.lineproduct_model</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" states="P" confirm="Do you want to do confirm this order?"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <h2 style="color:#117DA0">Date Line Product</h2>
+                        <group>
+                            <field name="product_id" attrs = "{'readonly':[('state','=','D')]}"/>
+                            <field name="quantity" attrs = "{'readonly':[('state','=','D')]}"/>
+                            <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="restaurant_app.lineProduct_list_tree_waiter">
+            <field name ="name">LineProduct Tree</field>
+            <field name="model">restaurant_app.lineproduct_model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id" />
+                    <field name="quantity"/>
+                    <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                </tree>
+            </field>
+        </record>
+    <record model="ir.actions.act_window" id="restaurant_app.action_window_lineProduct_Waiter">
+            <field name ="name">LineProduct App</field>
+            <field name="res_model">restaurant_app.lineproduct_model</field>
+            <field name="view_mode">tree,form</field>
+            <field name ="domain">[('state','=','D'),('order_id.state','=','D')]</field>
+        </record>
+        
+    </data>
+</odoo>

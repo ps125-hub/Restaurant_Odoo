@@ -1,5 +1,5 @@
 <odoo>
-
+    
     <record id="module_rest_category" model="ir.module.category">
         <field name="name">Restaurant</field>
     </record>
@@ -18,5 +18,9 @@
         <field name="category_id" ref="module_rest_category"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
-    
+    <record id="restaurant_group_barman" model="res.groups">
+        <field name="name">Barman</field>
+        <field name="category_id" ref="module_rest_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
 </odoo>

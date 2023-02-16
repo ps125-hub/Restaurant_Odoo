@@ -16,7 +16,36 @@ class OrderModel(models.Model):
     lineProducts = fields.One2many("restaurant_app.lineproduct_model","order_id",string="Line products")
     invoice_id = fields.Many2one("restaurant_app.invoice_model",string = "Invoice", compute="_createInvoice",store=True)
     state = fields.Selection(string="Status",selection=[('D','Draft'),('C','Confirmed'),],default="D")
-    active = fields.Boolean(string = "Is the order active?",help="The task is order??",default=True)
+    active = fields.Boolean(string = "Is the order active?",help="The active is order??",default=True)
+    isdone = fields.Boolean(string="Is done?",help="The order is done?",compute="_isDone",store=True)
+    color = fields.Integer(string = "Color", help = "Color of the kamba")
+    isdoneline = fields.Boolean(string="Is done line?",help="The orderline is done?",compute="_isDoneLine",store=True)
+    isdoneline = fields.Boolean(string="Is done line?",help="The orderline is done?",store=True)
+
+    @api.onchange("isdone")
+    def _changeColor(self):
+        if self.isdone == True:
+            self.color = 2
+    @api.onchange("isdone")
+    def _changeActiveTask(self):
+        self.active = not self.isdone
+        self.isdone = not self.active
+
+    @api.depends("lineProducts.isdone")
+    def _isDoneLine(self):
+       result = False
+       for rec in self.lineProducts:
+        
+    @api.depends("lineProducts.state")
+    def _isDone(self):
+        result = False
+        for rec in self.lineProducts:
+            if rec.state =="P":
+                result=False
+            elif rec.state =="D":
+                result = True
+        self.isdone = result
+    
     @api.constrains("table")
     def _numTable(self):
         num=0
@@ -42,10 +71,33 @@ class OrderModel(models.Model):
         if self.state == "D":
             self.state = "C"
             self.active=False
+            return {
+            'name': ('Category List'),
+            'view_type': 'form',
+            'view_mode': 'kanban,tree,form',
+            'res_model': 'restaurant_app.order_model',
+            'view_id': False,
+            #'views':[(self.env.ref('restaurant_app.order_list_model').id,'tree'),('restaurant_app.category_model_form_inherit').id,'form'],
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'nodestroy': True
+            }
 
     @api.depends("state")  
     def _createInvoice(self):
         if(self.state =='C'):
             invoice = self.env["restaurant_app.invoice_model"].sudo().create({"client": self.client,"lineProducts": self.lineProducts})
             self.invoice_id = invoice
-            
+
+    
+    def back(self):
+        return {
+            'name': ('Category List'),
+            'view_type': 'form',
+            'view_mode': 'kanban,tree,form',
+            'res_model': 'restaurant_app.order_model',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'nodestroy': True
+            }

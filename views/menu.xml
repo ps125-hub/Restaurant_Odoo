@@ -1,15 +1,17 @@
 <odoo>
 <data>
 <!-- Top menu item-->
-    <menuitem name="Restaurant App" id ="restaurant_app.menu_root" web_icon="restaurant_app,static/description/icon.png" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/>
+    <menuitem name="Restaurant App" id ="restaurant_app.menu_root" web_icon="restaurant_app,static/description/icon.png" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker,restaurant_group_barman"/>
     <!-- menu categories-->
-    <menuitem name ="Categories" id="restaurant_app.menu_categories" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker" /> 
-    <menuitem name ="Products" id="restaurant_app.menu_products" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/> 
+    <menuitem name ="Categories" id="restaurant_app.menu_categories" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter" /> 
+    <menuitem name ="Products" id="restaurant_app.menu_products" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter"/> 
     <menuitem name="Ingredients" id="restaurant_app.menu_ingredients" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/> 
-    <menuitem name="Orders" id="restaurant_app.order_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/> 
-    <menuitem name="LineProducts" id="restaurant_app.lineproduct_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter,restaurant_group_cooker"/>
+    <menuitem name="Orders" id="restaurant_app.order_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter"/> 
     <menuitem name="Invoices" id="restaurant_app.invoice_model" parent="restaurant_app.menu_root" groups="restaurant_group_adm,restaurant_group_waiter"/>
-
+   <menuitem name="LineProductsAdmin" id="restaurant_app.lineproduct_model_admin" parent="restaurant_app.menu_root" groups="restaurant_group_adm"/>
+   <menuitem name="LineProductsWaiter" id="restaurant_app.lineproduct_model_waiter" parent="restaurant_app.menu_root" groups="restaurant_group_waiter"/>
+    <menuitem name="LineProductsCooker" id="restaurant_app.lineproduct_model_cooker" parent="restaurant_app.menu_root" groups="restaurant_group_cooker"/>
+    <menuitem name="LineProductsBarman" id="restaurant_app.lineproduct_model_barman" parent="restaurant_app.menu_root" groups="restaurant_group_barman"/>
     <!-- actions-->
     <menuitem name="categorie List" id ="restaurant_app.menu_category_list" parent="restaurant_app.menu_categories"
         action="restaurant_app.action_window_category" />
@@ -17,10 +19,30 @@
         action="restaurant_app.action_window_product"/>
     <menuitem name="Ingredient List" id ="restaurant_app.menu_ingredient_list" parent="restaurant_app.menu_ingredients"
         action="restaurant_app.action_window_ingredient"/>
+        <!-- Order-->
     <menuitem name="Order List" id ="restaurant_app.menu_order_list" parent="restaurant_app.order_model"
         action="restaurant_app.action_window_order"/>
-    <menuitem name="Line Product List" id ="restaurant_app.menu_lineProduct_list"  parent="restaurant_app.lineproduct_model"  
-        action="restaurant_app.action_window_lineProduct" />
+        <!-- <menuitem name="Order List2" id ="restaurant_app.menu_order_list" parent="restaurant_app.order_model"
+        action="restaurant_app.action_window_order_2"/>-->
+    <!-- line product-->
+    <menuitem name="Line Product List" id ="restaurant_app.menu_lineProduct_list_admin"  parent="restaurant_app.lineproduct_model_admin"  
+        action="restaurant_app.action_window_lineProductAdmin" />
+    <menuitem name="Line Product List Waiter" id ="restaurant_app.menu_lineProduct_list_waiter"  parent="restaurant_app.lineproduct_model_waiter"  
+        action="restaurant_app.action_window_lineProduct_Waiter" /> 
+    <menuitem name="Line Product List Cooker" id ="restaurant_app.menu_lineProduct_list_cooker"  parent="restaurant_app.lineproduct_model_cooker"  
+        action="restaurant_app.action_window_lineProduct_Cooker" />
+    <menuitem name="Line Product List Barman" id ="restaurant_app.menu_lineProduct_list_barman"  parent="restaurant_app.lineproduct_model_barman"  
+        action="restaurant_app.action_window_lineProduct_Barman" />
+    <!--<menuitem name="Line Product List" id ="restaurant_app.menu_lineProduct_list_admin"  parent="restaurant_app.lineproduct_model_admin"  
+        action="restaurant_app.action_window_lineProductAdmin" />
+    <menuitem name="Line Product List Waiter" id ="restaurant_app.menu_lineProduct_list_waiter"  parent="restaurant_app.lineproduct_model_waiter"  
+        action="restaurant_app.action_window_lineProductWaiter" /> 
+    <menuitem name="Line Product List Cooker" id ="restaurant_app.menu_lineProduct_list_cooker"  parent="restaurant_app.lineproduct_model_cooker"  
+        action="restaurant_app.action_window_lineProductCooker" />
+    <menuitem name="Line Product List Barman" id ="restaurant_app.menu_lineProduct_list_barman"  parent="restaurant_app.lineproduct_model_barman"  
+        action="restaurant_app.action_window_lineProductBarman" />-->
+        
+    <!-- line invoice-->
     <menuitem name="Invoice List" id ="restaurant_app.menu_invoice_list"  parent="restaurant_app.invoice_model"  
         action="restaurant_app.action_window_invoice" />
 

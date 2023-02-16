@@ -14,6 +14,7 @@
                             <field name="description" />
                             <field name="currency_id" invisible="True" />
                             <field name="price" widget="monetary" options="{'currency_field':'currency_id'}" />
+                            <field name="manager" widget="selection"/>
                             <field name="categories">
                                 <tree>
                                     <field name = "complete_name"/>

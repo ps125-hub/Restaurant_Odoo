@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <record model ="ir.ui.view" id ="restaurant_app.lineProduct_model_form">
+        <record model ="ir.ui.view" id ="restaurant_app.lineProduct_admin_form">
             <field name ="name">LineProduct Form</field>
             <field name="model">restaurant_app.lineproduct_model</field>
             <field name="arch" type="xml">
@@ -12,21 +12,20 @@
                     <sheet>
                         <h2 style="color:#117DA0">Date Line Product</h2>
                         <group>
-                            <field name="product_id" attrs = "{'readonly':[('state','=','C')]}"/>
-                            <field name="quantity" attrs = "{'readonly':[('state','=','C')]}"/>
+                            <field name="product_id" attrs = "{'readonly':[('state','=','D')]}"/>
+                            <field name="quantity" attrs = "{'readonly':[('state','=','D')]}"/>
                             <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                         </group>
                     </sheet>
                 </form>
             </field>
-    
         </record>
-        <record model="ir.ui.view" id="restaurant_app.lineProduct_list_tree">
+        <record model="ir.ui.view" id="restaurant_app.lineProduct_list_tree_admin">
             <field name ="name">LineProduct Tree</field>
             <field name="model">restaurant_app.lineproduct_model</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="product_id"/>
+                    <field name="product_id" />
                     <field name="quantity"/>
                     <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                 </tree>
@@ -34,10 +33,55 @@
             </field>
         </record>
 
-    <record model="ir.actions.act_window" id="restaurant_app.action_window_lineProduct">
-            <field name ="name">LineProduct App</field>
+        <record model="ir.ui.view" id="restaurant_app.lineProduct_admin_search">
+            <field name ="name">LineProduct Filters</field>
+            <field name="model">restaurant_app.lineproduct_model</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                    <filter name ="state_done" string="Done"  domain="[('state','=','D')]"/>
+                    <filter name ="state_prepare" string="Prepare"  domain="[('state','=','P')]"/>
+                    </search>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="restaurant_app.action_window_lineProductAdmin">
+            <field name ="name">LineProduct Admin App</field>
             <field name="res_model">restaurant_app.lineproduct_model</field>
             <field name="view_mode">tree,form</field>
+            <field name ="domain"></field>
         </record>
+
+        <!--<record model="ir.actions.act_window" id="restaurant_app.action_window_lineProductBarman">
+            <field name ="name">LineProduct Barman App</field>
+            <field name="res_model">restaurant_app.lineproduct_model</field>
+            <field name="view_mode">tree,form</field>
+            <field name ="domain">[('state','=','P'),('product_id.manager','=ilike','B')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('restaurant_app.lineProduct_list_tree_admin')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('restaurant_app.lineProduct_admin_form')})]"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="restaurant_app.action_window_lineProductCooker">
+            <field name ="name">LineProduct Cooker App</field>
+            <field name="res_model">restaurant_app.lineproduct_model</field>
+            <field name="view_mode">tree,form</field>
+            <field name ="domain">[('state','=','P'),('product_id.manager','=ilike','C')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('restaurant_app.lineProduct_list_tree_admin')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('restaurant_app.lineProduct_admin_form')})]"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="restaurant_app.action_window_lineProductWaiter">
+            <field name ="name">LineProduct Waiter App</field>
+            <field name="res_model">restaurant_app.lineproduct_model</field>
+            <field name="view_mode">tree,form</field>
+            <field name ="domain">[('state','=','D'),('order_id.state','=','D')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('restaurant_app.lineProduct_list_tree_admin')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('restaurant_app.lineProduct_admin_form')})]"/>
+        </record>-->
     </data>
 </odoo>

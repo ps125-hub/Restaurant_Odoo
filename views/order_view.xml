@@ -16,8 +16,8 @@
                             <field name="client" attrs = "{'readonly':[('state','=','C')]}" />
                             <field name="pax" attrs = "{'readonly':[('state','=','C')]}" />
                             <field name="waiter" attrs = "{'readonly':[('state','=','C')]}" />
-                            <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}">
-                                <tree>
+                            <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}" type="xml">
+                                <tree >
                                     <field name = "product_id"/>
                                     <field name = "quantity"/>
                                     <field name = "price" widget="monetary" options="{'currency_field':'currency_id'}"/>
@@ -29,21 +29,38 @@
                     </sheet>
                 </form>
             </field>
-
+            <!-- tree success-->
         </record>
-        <record model="ir.ui.view" id="restaurant_app.order_list_tree">
+        <record model="ir.ui.view" id="restaurant_app.order_list_tree_success">
             <field name="name">Order Tree</field>
             <field name="model">restaurant_app.order_model</field>
             <field name="arch" type="xml">
-                <tree>
+                <!-- <tree decoration-success="isdone == True" decoration-danger ="lineProducts.isdoneline == False">-->
+                    <tree>
                     <field name="table" />
                     <field name="client" />
                     <field name="pax" />
                     <field name="waiter" />
                     <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
                     <field name="active" invisible="True" />
+                    <field name="isdone" />
                 </tree>
-
+            </field>
+        </record>
+        <!-- tree danger-->
+        <record model="ir.ui.view" id="restaurant_app.order_list_tree_danger">
+            <field name="name">Order Tree</field>
+            <field name="model">restaurant_app.order_model</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger ="isdone == False">
+                    <field name="table" />
+                    <field name="client" />
+                    <field name="pax" />
+                    <field name="waiter" />
+                    <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
+                    <field name="active" invisible="True" />
+                    <field name="isdone" />
+                </tree>
             </field>
         </record>
         <record model="ir.ui.view" id="restaurant_app.action_window_order_model_kanban">
@@ -54,20 +71,21 @@
 
             <field name="arch" type="xml">
 
-                <kanban class="o_res_partner_kanban">
+                <kanban class="o_res_partner_kanban" >
 
                     <field name="table"/>
-
                     <field name="client"/>
                     <field name="pax"/>
                     <field name="waiter"/>
                     <field name="priceTotal"/>
                     <field name="state"/>
+                    <field name="isdone" />
+                    <field name="color" />
                     <templates>
 
                         <t t-name="kanban-box">
 
-                            <div t-attf-class="oe_kanban_global_click">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click" >
 
                                 <div class="oe_kanban_details">
 
@@ -88,6 +106,9 @@
                                     <div t-if="record.state.value">
                                         <t t-esc="record.state.value" />
                                     </div>
+                                    <div t-if="record.state.value">
+                                        <t t-esc="record.isdone.value" />
+                                    </div>
                                 </div>
 
                             </div>
@@ -106,5 +127,15 @@
             <field name="res_model">restaurant_app.order_model</field>
             <field name="view_mode">kanban,tree,form</field>
         </record>
+        <!--< record model="ir.actions.act_window" id="restaurant_app.action_window_order_2">
+            <field name="name">Order App 2</field>
+            <field name="res_model">restaurant_app.order_model</field>
+            <field name="domain">[('isdone','=','False')]</field>
+            <field name="view_mode">tree</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('restaurant_app.order_list_tree_danger')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('restaurant_app.order_model_form')})]"/>
+
+        </record>-->
     </data>
 </odoo>
