@@ -3,17 +3,20 @@
         <record model ="ir.ui.view" id ="restaurant_app.lineProduct_model_form_cooker">
             <field name ="name">LineProduct Form</field>
             <field name="model">restaurant_app.lineproduct_model</field>
+            <field name="inherit_id" ref="restaurant_app.lineProduct_admin_form"/>
+            <field name="mode">primary</field>
             <field name="arch" type="xml">
-                <form>
-                    <header>
-                        <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" states="P" />
-                        <field name="state" widget="statusbar" />
-                    </header>
+                    <form >
+                            <header>
+                                <!--<button name="buttonLineOrderCooker" type="object" string="Done" class="oe_highlight" states="P" confirm="Do you want to do done this line order?"/>-->
+                                 <field name="state" widget="statusbar" />
+                             </header>
+
                     <sheet>
                         <h2 style="color:#117DA0">Date Line Product</h2>
                         <group>
-                            <field name="product_id" attrs = "{'readonly':[('state','=','D')]}"/>
-                            <field name="quantity" attrs = "{'readonly':[('state','=','D')]}"/>
+                            <field name="product_id" attrs = "{'readonly':[('state','=','D'),('state','=','C')]}"/>
+                            <field name="quantity" attrs = "{'readonly':[('state','=','D'),('state','=','C')]}"/>
                             <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                         </group>
                     </sheet>
@@ -28,6 +31,8 @@
                     <field name="product_id" />
                     <field name="quantity"/>
                     <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                    <field name ="state"/> 
+                    <button name="buttonLineOrderCooker" type="object" string="Done" class="oe_highlight" states="P" confirm="Do you want to do done this line order?"/>
                 </tree>
             </field>
         </record>

@@ -4,16 +4,16 @@
             <field name ="name">LineProduct Form</field>
             <field name="model">restaurant_app.lineproduct_model</field>
             <field name="arch" type="xml">
-                <form>
-                    <header>
-                        <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" states="P" />
+                <form >
+                     <header>
+                        <!--<button name="buttonLineOrderBarman" type="object" string="Done" class="oe_highlight" states="P" confirm="Do you want to do done this line order?"/>-->
                         <field name="state" widget="statusbar" />
                     </header>
                     <sheet>
                         <h2 style="color:#117DA0">Date Line Product</h2>
                         <group>
-                            <field name="product_id" attrs = "{'readonly':[('state','=','D')]}"/>
-                            <field name="quantity" attrs = "{'readonly':[('state','=','D')]}"/>
+                            <field name="product_id" attrs = "{'readonly':[('state','=','D'),('state','=','C')]}"/>
+                            <field name="quantity" attrs = "{'readonly':[('state','=','D'),('state','=','C')]}"/>
                             <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                         </group>
                     </sheet>
@@ -28,6 +28,8 @@
                     <field name="product_id" />
                     <field name="quantity"/>
                     <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                    <field name ="state"/> 
+                    <button name="buttonLineOrderBarman" type="object" string="Done" class="oe_highlight" states="P" confirm="Do you want to do done this line order?"/>
                 </tree>
             </field>
         </record>
@@ -36,6 +38,7 @@
             <field name="res_model">restaurant_app.lineproduct_model</field>
             <field name="view_mode">tree,form</field>
             <field name ="domain">[('state','=','P'),('product_id.manager','=ilike','B')]</field>
+
         </record>
         
     </data>

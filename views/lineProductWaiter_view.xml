@@ -5,15 +5,16 @@
             <field name="model">restaurant_app.lineproduct_model</field>
             <field name="arch" type="xml">
                 <form>
-                    <header>
-                        <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" states="P" confirm="Do you want to do confirm this order?"/>
-                        <field name="state" widget="statusbar" />
-                    </header>
+                        <header>
+                            <!--<button name="buttonLineOrderWaiter" type="object" string="Collected" class="oe_highlight" states="D" confirm="Do you want to do collected this line order?"/>-->
+                            <field name="state" widget="statusbar" />
+                        </header>
                     <sheet>
                         <h2 style="color:#117DA0">Date Line Product</h2>
                         <group>
                             <field name="product_id" attrs = "{'readonly':[('state','=','D')]}"/>
                             <field name="quantity" attrs = "{'readonly':[('state','=','D')]}"/>
+                            <field name ="state"/> 
                             <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
                         </group>
                     </sheet>
@@ -28,6 +29,8 @@
                     <field name="product_id" />
                     <field name="quantity"/>
                     <field name ="price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                    <button name="buttonLineOrderWaiter" type="object" string="Collected" class="oe_highlight" states="D" confirm="Do you want to do collected this line order?"/>
+
                 </tree>
             </field>
         </record>

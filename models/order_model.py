@@ -18,32 +18,28 @@ class OrderModel(models.Model):
     state = fields.Selection(string="Status",selection=[('D','Draft'),('C','Confirmed'),],default="D")
     active = fields.Boolean(string = "Is the order active?",help="The active is order??",default=True)
     isdone = fields.Boolean(string="Is done?",help="The order is done?",compute="_isDone",store=True)
-    color = fields.Integer(string = "Color", help = "Color of the kamba")
-    isdoneline = fields.Boolean(string="Is done line?",help="The orderline is done?",compute="_isDoneLine",store=True)
-    isdoneline = fields.Boolean(string="Is done line?",help="The orderline is done?",store=True)
+    isdoneline = fields.Boolean(string="Is done line?",help="The orderline is done?",compute="_isDoneLine",store=True,default =False)
 
-    @api.onchange("isdone")
-    def _changeColor(self):
-        if self.isdone == True:
-            self.color = 2
     @api.onchange("isdone")
     def _changeActiveTask(self):
         self.active = not self.isdone
         self.isdone = not self.active
 
-    @api.depends("lineProducts.isdone")
+    @api.depends("lineProducts.state")
     def _isDoneLine(self):
-       result = False
-       for rec in self.lineProducts:
+        result = False
+        for rec in self.lineProducts:
+            if rec.state == "D":
+                result = True
+                break
+        self.isdoneline = result
         
     @api.depends("lineProducts.state")
     def _isDone(self):
-        result = False
+        result = True
         for rec in self.lineProducts:
-            if rec.state =="P":
+            if rec.state !="C":
                 result=False
-            elif rec.state =="D":
-                result = True
         self.isdone = result
     
     @api.constrains("table")
@@ -71,13 +67,18 @@ class OrderModel(models.Model):
         if self.state == "D":
             self.state = "C"
             self.active=False
+            if self.isdone ==False:
+                    raise ValidationError("You cannot confirm that there is still a pending order line!!")
             return {
-            'name': ('Category List'),
+            'name': ('Order App'),
             'view_type': 'form',
             'view_mode': 'kanban,tree,form',
             'res_model': 'restaurant_app.order_model',
             'view_id': False,
-            #'views':[(self.env.ref('restaurant_app.order_list_model').id,'tree'),('restaurant_app.category_model_form_inherit').id,'form'],
+            #'views':[
+            #(self.env.ref('restaurant_app.action_window_order_model_kanban').id,'kanban'),
+            #(self.env.ref('restaurant_app.order_list_tree').id,'tree'),
+            #(self.env.ref('restaurant_app.order_model_form').id,'from')],
             'type': 'ir.actions.act_window',
             'target': 'current',
             'nodestroy': True
@@ -90,14 +91,3 @@ class OrderModel(models.Model):
             self.invoice_id = invoice
 
     
-    def back(self):
-        return {
-            'name': ('Category List'),
-            'view_type': 'form',
-            'view_mode': 'kanban,tree,form',
-            'res_model': 'restaurant_app.order_model',
-            'view_id': False,
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'nodestroy': True
-            }

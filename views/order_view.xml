@@ -18,9 +18,10 @@
                             <field name="waiter" attrs = "{'readonly':[('state','=','C')]}" />
                             <field name="lineProducts" attrs = "{'readonly':[('state','=','C')]}" type="xml">
                                 <tree >
-                                    <field name = "product_id"/>
-                                    <field name = "quantity"/>
-                                    <field name = "price" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                                    <field name = "product_id" decoration-success="state == 'C'" decoration-danger ="state == 'D'"/>
+                                    <field name = "quantity" decoration-success="state == 'C'" decoration-danger ="state == 'D'"/>
+                                    <field name = "price" widget="monetary" options="{'currency_field':'currency_id'}" decoration-success="state == 'C'" decoration-danger ="state == 'D'"/>
+                                    <field name = "state" decoration-success="state == 'C'" decoration-danger ="state == 'D'"/>
                                 </tree>
                             </field>
                             <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
@@ -31,12 +32,11 @@
             </field>
             <!-- tree success-->
         </record>
-        <record model="ir.ui.view" id="restaurant_app.order_list_tree_success">
+        <record model="ir.ui.view" id="restaurant_app.order_list_tree">
             <field name="name">Order Tree</field>
             <field name="model">restaurant_app.order_model</field>
             <field name="arch" type="xml">
-                <!-- <tree decoration-success="isdone == True" decoration-danger ="lineProducts.isdoneline == False">-->
-                    <tree>
+                <tree decoration-success="isdone == True" decoration-danger ="isdoneline == True">
                     <field name="table" />
                     <field name="client" />
                     <field name="pax" />
@@ -44,25 +44,11 @@
                     <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
                     <field name="active" invisible="True" />
                     <field name="isdone" />
+                    <field name="isdoneline" invisible="True"/>
                 </tree>
             </field>
         </record>
-        <!-- tree danger-->
-        <record model="ir.ui.view" id="restaurant_app.order_list_tree_danger">
-            <field name="name">Order Tree</field>
-            <field name="model">restaurant_app.order_model</field>
-            <field name="arch" type="xml">
-                <tree decoration-danger ="isdone == False">
-                    <field name="table" />
-                    <field name="client" />
-                    <field name="pax" />
-                    <field name="waiter" />
-                    <field name="priceTotal" widget="monetary" options="{'currency_field':'currency_id'}" />
-                    <field name="active" invisible="True" />
-                    <field name="isdone" />
-                </tree>
-            </field>
-        </record>
+
         <record model="ir.ui.view" id="restaurant_app.action_window_order_model_kanban">
 
             <field name="name">Kanban List</field>
@@ -79,13 +65,11 @@
                     <field name="waiter"/>
                     <field name="priceTotal"/>
                     <field name="state"/>
-                    <field name="isdone" />
-                    <field name="color" />
                     <templates>
 
                         <t t-name="kanban-box">
 
-                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click" >
+                            <div t-attf-class="oe_kanban_global_click">
 
                                 <div class="oe_kanban_details">
 
@@ -105,9 +89,6 @@
                                     </div>
                                     <div t-if="record.state.value">
                                         <t t-esc="record.state.value" />
-                                    </div>
-                                    <div t-if="record.state.value">
-                                        <t t-esc="record.isdone.value" />
                                     </div>
                                 </div>
 
